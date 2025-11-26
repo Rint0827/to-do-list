@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// login 画面
+Route::get('/login',[LoginController::class,'show'])->name('login');
+// login 機能
+Route::post('/login',[LoginController::class,'login'])->name('login.post');
+
+// logout　
+Route::get('/logout',[LoginController::class,'logout'])->name('logout');
+
+// todo
 Route::middleware('auth')->group(function () {
     // 一覧画面
     Route::get('/todos', [TodoController::class, 'index'])->name('todo.index');

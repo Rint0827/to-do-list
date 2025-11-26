@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('todos', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        Schema::create('todos', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');  // 先只要字段，不加外键约束
             $table->string('title');
             $table->text('description')->nullable();
             $table->boolean('is_done')->default(false);
             $table->date('due_date')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,14 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('todos', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
-            $table->dropColumn('title');
-            $table->dropColumn('description');
-            $table->dropColumn('is_done');
-            $table->dropColumn('due_date');
-        });
-//        $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        Schema::dropIfExists('todos');
     }
 };
