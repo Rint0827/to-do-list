@@ -10,17 +10,39 @@
 </head>
 <body>
     <header>
-        <h1 class="mb-4 text-center">タスクを作成</h1>
     </header>
     <main>
-        <form action="{{ route('todo.store') }}" method="post">
-            @csrf
-            <label for="email">メールアドレス</label>
-            <input type="email" id="email" name="email">
-            <label for="password">パスワード</label>
-            <input type="password" id="password" name="password">
-            <button>送信</button>
-        </form>
+        <div class="container mt-5" style="max-width: 600px;">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="mb-4 text-center">タスクを作成</h1>
+                    <form method="POST" action="{{ route('todo.store') }}">
+                        @csrf
+
+                        {{-- タイトル --}}
+                        <div class="mb-3">
+                            <label class="form-label">タイトル</label>
+                            <input type="text" name="title" class="form-control" required>
+                        </div>
+
+                        {{-- 詳細 --}}
+                        <div class="mb-3">
+                            <label class="form-label">詳細</label>
+                            <textarea name="description" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        {{-- 期限 --}}
+                        <div class="mb-3">
+                            <label class="form-label">期限</label>
+                            <input type="date" name="due_date" class="form-control">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">保存</button>
+                        <a href="{{ route('todo.index') }}" class="btn btn-secondary ms-2">戻る</a>
+                    </form>
+                </div>
+            </div>
+        </div>
     </main>
     <footer class="mt-5 py-3 bg-white border-top">
         <div class="container text-center small text-muted">
